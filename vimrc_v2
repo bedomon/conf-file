@@ -1,0 +1,221 @@
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+"=========================================
+" Setting initial size of the vim window
+"=========================================
+if has ("gui_running")
+	" GUI is running or is about to start
+	" Maximizing gvim window (for an alternative on Windows, see simalt below)
+	set lines=999 columns=999
+else
+	" this is console vim
+	if exists("+lines")
+		set lines=50
+	endif
+	if exists("+columns")
+		set columns=100
+	endif
+endif
+
+"===========================
+" Vundle config and setting
+"===========================
+filetype off " required
+
+"============================
+"============================
+" The following snippet is used to have the same vimrc file for windows and
+" linux
+"let win_shell = (has('win32') || has('win64')) && &shellcmdflag =~ '/'
+"let vimDir = win_shell ? '$HOME/vimfiles' : '$HOME/.vim'
+"let &runtimepath .= ',' . expand(vimDir . '/bundle/vundle')
+"call vundle#rc(expand(vimDir . '/bundle'))
+"============================
+"============================
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/vimfiles/bundle/Vundle.vim/
+let path='~/vimfiles/bundle'
+call vundle#begin(path)
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+" Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+" Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+" Plugin 'user/L9', {'name': 'newL9'}
+
+" Configuration from https://github.com/arithran/php-ide-vim/blob/master/.vimrc
+Plugin 'tpope/vim-fugitive'			" Git wrapper
+Plugin 'scrooloose/nerdtree'
+Plugin 'majutsushi/tagbar'
+Plugin 'othree/html5.vim'
+Plugin 'gregsexton/MatchTag'
+Plugin 'tpope/vim-pathogen'
+Plugin 'groenewege/vim-less'
+Plugin 'scrooloose/syntastic'
+Plugin 'kien/ctrlp.vim'
+Plugin 'morhetz/gruvbox'
+Plugin 'vim-scripts/php.vim-html-enhanced'
+Plugin 'tmhedberg/matchit'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-surround'
+"  Vim snip mate
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'altercation/vim-colors-solarized'
+
+" scss syntax highlight
+" Plugin 'cakebraker/scss-syntax.vim'
+"  Plugin 'bling/vim-airline'
+"  PHP Documentor
+"  Plugin 'tobyS/vmustache' "  PHP documentor dependancy
+"  Plugin 'tobyS/pdv' "  PHP documentor
+
+ se t_Co=256
+"  Plugin 'sukima/xmledit'
+" plugin from http://vim-scripts.org/vim/scripts.html
+Plugin 'L9'
+Plugin 'ZoomWin'
+" Git plugin not hosted on GitHub
+" Plugin 'git://git.wincent.com/command-t.git' le plugin est disponible sur
+" github depuis peu
+Plugin 'wincent/command-t'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+"======================
+" GENERAL SETTINGS
+"======================
+set mouse=a				" utilisation de la souris et du scrol
+set tabstop=4			" 1 tabulation = 4 espaces
+let mapleader = ","		" Vim calls the 'prefix' key the 'leader'. When we create a new mapping we can use <leader> to mean 'whatever' I have my leader key set to
+" set guifont=MyFont\ for\ Powerline
+" Let g:Powerline_symbols = 'fancy'
+" let g:airline#extensions#tabline#enable = 1
+
+
+"===============
+" Theme settings
+"===============
+syntax on				" detection automatique de la syntaxe
+set background=dark
+colorscheme solarized
+" colorscheme darkblue
+
+"======================
+" FLAGS & VIM SETTINGS
+"======================
+set spelllang=fr_FR 	" spelling french
+set gdefault 			" set global flag by default
+set noswapfile 			" doesn't a create swap file
+set cursorline			" add a line for the cursor
+set winheight=5
+set winminheight=5
+set winheight=999
+set number				" affiche les numéros de lignes
+set ignorecase			" ignore la casse pour la recherche
+set incsearch
+set smartcase
+set foldmethod=syntax
+set foldlevelstart=1
+set wildmenu 			" show suggestion when tabing in normal mode
+set scrolloff=5			" adds 5 lines to the top and bottom of the window
+set laststatus=2		" adding the status line to the editor
+" set clipboard=unnamedplus " set the system clipboard default
+
+" Formating {{{
+set noexpandtab			" make sur that every file uses real tabs, not spaces
+set shiftround			" Round ident to multiple of shiftwidth
+set backspace=indent,eol,start " Backspace over everything in insert mode
+set smartindent			" Do smart indenting when starting a new line
+set autoindent			" Copy indent from current line to the new line
+set fo=vt				" set the format options ('formatoptions')
+set nojoinspaces		" :h joinspaces
+
+" Set the tab width
+let s:tabwidth=4
+exec 'set tabstop='.s:tabwidth
+exec 'set shiftwidth='.s:tabwidth
+exec 'set softtabstop='.s:tabwidth
+" }}}
+
+"==============
+" KEY BINDINGS
+"==============
+" This is a bind to navigate windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-o> <C-w>o
+nnoremap th  :tabfirst<CR>
+nnoremap tk  :tabnext<CR>
+nnoremap tj  :tabprev<CR>
+nnoremap tl  :tablast<CR>
+nnoremap tn  :tabedit<Space>
+nnoremap tm  :tabm<Space>
+nnoremap td  :tabclose<CR>
+"Toggle spell checker
+nmap <silent> <leader>s :set spell!<CR>
+" Toggle commenting Requires T-comment plugin
+map <leader>c <c-_><c-_>
+" Toggle Nerd Tree
+map <silent> <leader>t :NERDTreeToggle<CR> :NERDTreeMirror<CR>
+" Toggle easymotion
+map <leader>w <leader><leader>w
+map <leader>b <leader><leader>b
+" Toggle Tagbar
+map <leader>g :Tagbar<CR>
+
+"AUTOMATICALLY RUN THESE
+"=======================
+"Automatically Open Nerd Tree
+" autocmd VimEnter * NERDTree
+"Automatically Open Tagbar
+" autocmd VimEnter * Tagbar
+
+
+" ABBREVIATIONS
+" auto complete tags
+iabbrev </ </<C-X><C-O>
+
+" Warn if the file has been changed
+au FileChangedShell * echo "Warning: File changed on disk"
+
+
+
